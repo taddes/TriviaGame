@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    $(".questions").hide();
+
     //Establish the counter within timer object
 
     var timer = {
@@ -13,15 +15,25 @@ $(document).ready(function() {
         clearInterval(counter);
     },
 
-    count: function() {
-        timer.startTime--;
-        $(".timer").html(timer.time);
-    },
-
     reset: function() {
         this.time = 30;
-        $(".timer").html("<p>" + this.time + " seconds remain</p>");
-    }
+        $(".timer").html("<p>" + this.startTime + " seconds remain</p>");
+    },
+
+    count: function() {
+        timer.startTime--;
+        console.log(timer.startTime);
+        $(".timer").html(timer.startTime);
+
+        if (timer.startTime >= 0) {
+            $(".timer").html("<p>" + timer.startTime + " seconds remain</p>");
+        } else {
+            wrongAnswers();
+            timer.reset();
+        }
+    },
+
+    
 };
     
 
@@ -31,7 +43,7 @@ $(document).ready(function() {
         $(".startButton").on("click", function(){
             $(this).hide();
             timer.start();
-            questionsPage.show();
+            $(".questions").show();
         
         });
     }
