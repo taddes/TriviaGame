@@ -2,6 +2,8 @@ $(document).ready(function() {
 
     $(".questions").hide();
 
+    
+
     //Establish the counter within timer object
 
     var timer = {
@@ -9,6 +11,7 @@ $(document).ready(function() {
 
     start: function() {
         counter = setInterval(timer.count, 1000);
+        $(".timer").html("<p>Timer: " + timer.startTime + " seconds remain</p>");
     },
      
     stop: function() {
@@ -23,13 +26,15 @@ $(document).ready(function() {
     count: function() {
         timer.startTime--;
         // console.log(timer.startTime);
-        $(".timer").html(timer.startTime);
+        $(".timer").html("<p>Timer: " + timer.startTime + " seconds remain</p>");
 
-        if (timer.startTime >= 0) {
-            $(".timer").html("<p>" + timer.startTime + " seconds remain</p>");
+        if (timer.startTime > 0) {
+            $(".timer").html("<p>Timer: " + timer.startTime + " seconds remain</p>");
+           
         } else {
-            // wrongAnswers();
-            timer.reset();
+            timer.stop();
+            showScore();
+
         }
     },
 
@@ -123,8 +128,8 @@ var questionsArray = [
     instructionPage();
 
     $(".startButton").on("click", function(){
-        $(".questions").show();
         $(".timer").show();
+        $(".questions").show();
         timer.start();
 
     })
@@ -138,30 +143,47 @@ var questionsArray = [
     var correct= 0;
     var incorrect= 0;
 
+    function showScore() {
 
+        
+        $('.questions').empty();
+        $(".questions").append("<br><h2><p>Your Score:</p></h2>")
+        $('.questions').append("<h2><p>" + correct + " correct</p></h2>");
+        $('.questions').append("<h2><p>" + incorrect + " incorrect</p></h2>");
+        timer.stop();
+        $('.timer').empty();
+    }
 
 
   
     
 
    function displayQuestions() {
+    
+    
+       
              for ( var i = 0; i < questionsArray.length; i++) {
 
-                $(".questions").append(questionsArray[i].question);
+                $(".questions").append("<br><h4>" + questionsArray[i].question + "<h4>"+ "<hr><br>");
 
           //make into a variable, then put it all up after 
           for ( var j = 0; j < questionsArray[i].choices.length; j++) {
-            $(".questions").append(questionsArray[i].choices[j]);
-              
+            $(".questions").append("<input type='radio' id='radio' name='question-" + i + "'value='" + questionsArray[i].choices[j] +"'>" + questionsArray[i].choices[j] +"<br><br>");
                 }
 
-            }
-
-        
-   }
+            }  
+            $(".questions").append("<button class='submit'>Submit</button>");
+            
+    
+               }
+           
+            //    $(".radio").on("click", function() {
+            //     var storeAnswers = $(this).val();
+            //     console.log(storeAnswers);
+            //    })
+  
    
-   
-
+ // $(".submit").on("click", showScore());   
 
 
     });

@@ -1,0 +1,11 @@
+/* html {
+    background-image: url("../images/can.png")
+} */
+
+body {
+    font-family: 'Rammetto One', cursive;
+    margin: 5%;
+    background-image: url("../images/can.png");
+    background-size: 100%
+}
+
